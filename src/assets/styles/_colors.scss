@@ -1,0 +1,38 @@
+.wrapper.light {
+  --app-background: #f7f8f8;
+  --border: #e8eaf1;
+  --red: #d80505;
+  --red-btn: #d80505;
+  --disabled: #9296a5;
+  --blue: #5d7ada;
+  --button-main: #fff;
+  --text-highlight: #475671;
+  --text-main: #475671;
+  --input-border: #dde4eb;
+  --text-area-bg: #ede9e9;
+  --text-area-focused-bg: #e2e3e4;
+
+  --default-container-background: #fff;
+  --status-done: #43a047;
+  --status-inprogres: #ffb300;
+  --status-failed: #e53935;
+}
+
+.wrapper.dark {
+  --default-container-background: #1a1a1a;
+  --app-background: #242424;
+  --border: #5454547a;
+  --red: #F07178;
+  --red-btn: #d80505;
+  --disabled: #9296a5;
+  --blue: #5d7ada;
+  --button-main: #fff;
+  --text-highlight: #fff;
+  --text-main: #ebebeb99;
+  --input-border: #5454547a;
+  --text-area-bg: #242424;
+  --text-area-focused-bg: rgb(40, 40, 40);
+  --status-done: #43a047;
+  --status-inprogres: #ffb300;
+  --status-failed: #F07178;
+}

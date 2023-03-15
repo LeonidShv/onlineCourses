@@ -1,0 +1,30 @@
+@import "@/assets/styles/_colors.scss";
+@import "@/assets/styles/_reset.scss";
+@import "@/assets/styles/_modifier.scss";
+
+.block {
+  background-color: var(--default-container-background);
+  padding: 16px 32px;
+  border-radius: 8px;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  @include tablet-lower {
+    padding: 12px 20px;
+    border-radius: 6px;
+  }
+}
+
+div,
+p,
+span,
+td {
+  color: var(--text-main);
+}
+
+h1,
+h2 {
+  color: var(--text-highlight);
+}
