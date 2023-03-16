@@ -6,7 +6,13 @@ import router from './router'
 
 import "./assets/styles/main.scss";
 
-const app = createApp(App)
+import { Quasar, Notify } from 'quasar'
+
+const app = createApp(App).use(Quasar, {
+  plugins: {
+    Notify,
+  }
+})
 
 app.use(createPinia())
 app.use(router)

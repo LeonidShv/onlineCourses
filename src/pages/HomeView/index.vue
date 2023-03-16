@@ -1,11 +1,10 @@
 <template>
-  <main>
-    <h1 class="title">This is an HOME page</h1>
-  </main>
+  <h1>
+    Home view
+  </h1>
 </template>
 
 <script setup lang="ts">
-import {requestSubscriptions, requestPreviewCourses} from '@/api';
 import { ref, onMounted } from 'vue';
 import { useGlobalStore } from '@/stores/global'
 
@@ -58,14 +57,4 @@ onMounted(async () => {
     console.log(result);
   });
 })
-
 </script>
-
-<style lang="scss">
-.title {
-  background: var(--red);
-  @include tablet-lower {
-    background: var(--blue);
-  }
-}
-</style>
