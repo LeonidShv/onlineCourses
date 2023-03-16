@@ -2,20 +2,9 @@
 @import "@/assets/styles/_reset.scss";
 @import "@/assets/styles/_modifier.scss";
 
-.block {
-  background-color: var(--default-container-background);
-  padding: 16px 32px;
-  border-radius: 8px;
-
-  &:not(:last-child) {
-    margin-bottom: 16px;
-  }
-
-  @include tablet-lower {
-    padding: 12px 20px;
-    border-radius: 6px;
-  }
-}
+@import 'quasar/dist/quasar';
+@import '@quasar/extras/roboto-font/roboto-font';
+@import '@quasar/extras/material-icons/material-icons';
 
 div,
 p,

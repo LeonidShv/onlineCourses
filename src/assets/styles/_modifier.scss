@@ -2,28 +2,4 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-
-  // max-width: 120px; - add to element
-}
-
-// Elements in progress
-.disabled {
-  position: relative;
-
-  &::after {
-    content: "Not ready";
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    text-align: center;
-    font-size: 28px;
-    color: rgb(102, 100, 100);
-    width: 100%;
-    height: 100%;
-    background: var(--default-container-background);
-    opacity: .6;
-  }
 }
