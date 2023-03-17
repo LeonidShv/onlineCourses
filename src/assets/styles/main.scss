@@ -1,19 +1,44 @@
-@import "@/assets/styles/_colors.scss";
-@import "@/assets/styles/_reset.scss";
-@import "@/assets/styles/_modifier.scss";
-
 @import 'quasar/dist/quasar';
 @import '@quasar/extras/roboto-font/roboto-font';
 @import '@quasar/extras/material-icons/material-icons';
 
-div,
+@import '@/assets/styles/_colors.scss';
+@import '@/assets/styles/_reset.scss';
+@import '@/assets/styles/_modifier.scss';
+
 p,
-span,
-td {
-  color: var(--text-main);
+h1,
+h2,
+h3,
+li {
+  color: var(--light);
 }
 
-h1,
+h1 {
+  font-size: 40px;
+}
+
 h2 {
-  color: var(--text-highlight);
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 14px;
+}
+
+body {
+  background-color: var(--deep-dark);
+}
+
+.input {
+  width: 200px;
+}
+
+// TODO: select, active label
+.q-field--highlighted .q-field__label {
+  color: var(--yellow);
 }

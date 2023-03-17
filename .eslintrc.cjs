@@ -21,5 +21,10 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
-  }
+  },
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    'declaration-block-trailing-semicolon': null,
+      'no-descending-specificity': null,
+  },
 }
