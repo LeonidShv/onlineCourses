@@ -40,14 +40,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 import { useGlobalStore } from '@/stores/global'
 import HomeCourse from './HomeCourse.vue'
 
 onMounted(async () => {
-  console.log(useGlobalStore().isDarkTheme);
-  useGlobalStore().toggleDarkTheme();
-  console.log(useGlobalStore().isDarkTheme);
+  console.log(useGlobalStore().isDarkTheme)
+  useGlobalStore().toggleDarkTheme()
+  console.log(useGlobalStore().isDarkTheme)
 
   // const data = await requestSubscriptions();
   // console.log(data);
@@ -57,41 +57,39 @@ onMounted(async () => {
 
   const requestOptions: any = {
     method: 'GET',
-    redirect: 'follow',
+    redirect: 'follow'
     // mode: 'no-cors',
     // Accept: '*/*',
     // 'Accept-Encoding': 'gzip, deflate, br',
     // Connection: 'keep-alive'
   }
 
-  fetch("https://api.wisey.app/api/v1/auth/anonymous?platform=subscriptions", requestOptions)
-  .then((response) => response.body)
-  .then((body) => {
-    const reader = body?.getReader();
+  fetch('https://api.wisey.app/api/v1/auth/anonymous?platform=subscriptions', requestOptions)
+    .then((response) => response.body)
+    .then((body) => {
+      const reader = body?.getReader()
 
-    return new ReadableStream({
-      start(controller) {
-        function push() {
-          reader?.read().then(({ done, value }) => {
-            if (done) {
-              controller.close();
-              return;
-            }
-            controller.enqueue(value);
-            push();
-          });
+      return new ReadableStream({
+        start(controller) {
+          function push() {
+            reader?.read().then(({ done, value }) => {
+              if (done) {
+                controller.close()
+                return
+              }
+              controller.enqueue(value)
+              push()
+            })
+          }
+
+          push()
         }
-
-        push();
-      },
-    });
-  })
-  .then((stream) =>
-    new Response(stream, { headers: { "Content-Type": "text/html" } }).text()
-  )
-  .then((result) => {
-    console.log(result);
-  });
+      })
+    })
+    .then((stream) => new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text())
+    .then((result) => {
+      console.log(result)
+    })
 })
 
 const sortingOption = ref('')

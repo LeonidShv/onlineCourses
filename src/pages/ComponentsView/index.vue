@@ -4,18 +4,26 @@
 
     <div>
       <q-breadcrumbs>
-      <q-breadcrumbs-el label="Home" />
-      <q-breadcrumbs-el label="Components" />
-      <q-breadcrumbs-el label="Breadcrumbs" />
-    </q-breadcrumbs>
+        <q-breadcrumbs-el label="Home" />
+        <q-breadcrumbs-el label="Components" />
+        <q-breadcrumbs-el label="Breadcrumbs" />
+      </q-breadcrumbs>
     </div>
 
     <div class="q-pa-md q-gutter-sm">
-      <q-btn color="white" text-color="black" label="Standard" />
+      <q-btn
+        color="white"
+        text-color="black"
+        label="Standard"
+      />
     </div>
 
     <div style="width: 300px">
-      <q-select v-model="select" :options="options" label="Standard" />
+      <q-select
+        v-model="select"
+        :options="options"
+        label="Standard"
+      />
       {{ select }}
     </div>
 
@@ -24,15 +32,14 @@
     </div>
 
     <div>
-
       <q-pagination
-      v-model="pagination"
-      color="purple"
-      :max="10"
-      :max-pages="6"
-      boundary-numbers
-      direction-links
-    />
+        v-model="pagination"
+        color="purple"
+        :max="10"
+        :max-pages="6"
+        boundary-numbers
+        direction-links
+      />
     </div>
 
     <div>
@@ -87,13 +94,12 @@
         stamp="4 minutes ago"
       />
     </div>
-
   </main>
 </template>
 
 <script setup lang="ts">
 // import {requestSubscriptions, requestPreviewCourses} from '@/api';
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 // import { useQuasar } from 'quasar'
 // const $q = useQuasar()
@@ -105,16 +111,16 @@ import { ref } from 'vue';
 //   })
 // }
 
-const select = ref(null);
-const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'];
+const select = ref(null)
+const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle']
 
-const isCheckbox = ref(false);
+const isCheckbox = ref(false)
 
-const pagination = ref(1);
+const pagination = ref(1)
 
-const ratingModel = ref(4.5);
+const ratingModel = ref(4.5)
 
-const toggle = ref(false);
+const toggle = ref(false)
 
-const textarea = ref('');
+const textarea = ref('')
 </script>

@@ -1,19 +1,19 @@
-import { api } from "../lib/axios";
+import { api } from '../lib/axios'
 
 export const requestSubscriptions = async () => {
   try {
-    const data  = await api.get("/auth/anonymous?platform=subscriptions");
-    return data;
+    const data = await api.get('/auth/anonymous?platform=subscriptions')
+    return data
   } catch (e) {
-    return null;
+    return null
   }
-};
+}
 
 export const requestPreviewCourses = async () => {
   try {
-    const data  = await api.get("/preview-courses");
-    return data;
+    const data = await api.get('/preview-courses')
+    return data
   } catch (e) {
-    return null;
+    return null
   }
-};
+}
