@@ -13,7 +13,7 @@
     </div>
 
     <div class="home-coursesList">
-      <HomeCourse
+      <Course
         v-for="i in 10"
         :key="i"
         :title="'JavaScript'"
@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useGlobalStore } from '@/stores/global'
-import HomeCourse from './HomeCourse.vue'
+import Course from './Course.vue'
 
 onMounted(async () => {
   console.log(useGlobalStore().isDarkTheme)

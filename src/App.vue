@@ -27,7 +27,7 @@ import { RouterLink, RouterView } from 'vue-router'
   justify-content: space-between;
   align-items: center;
   padding: 0 80px;
-  line-height: 60px;
+  line-height: var(--header-height);
   background-color: var(--dark);
 
   &-avatar {
@@ -43,9 +43,7 @@ import { RouterLink, RouterView } from 'vue-router'
 }
 
 .routerView {
-  $headerHeight: 60px;
-  $footerHeight: 60px;
-  height: calc(100vh - $headerHeight - $footerHeight);
+  height: calc(100vh - var(--header-height) - var(--footer-height));
   overflow: auto;
   padding: 24px 80px;
 }
@@ -55,6 +53,6 @@ import { RouterLink, RouterView } from 'vue-router'
   justify-content: space-between;
   background-color: var(--dark);
   padding: 0 80px;
-  line-height: 60px;
+  line-height:  var(--footer-height);
 }
 </style>

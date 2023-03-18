@@ -5,8 +5,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('@/pages/HomeView/index.vue')
+      name: 'coursesList',
+      component: () => import('@/pages/CoursesListView/index.vue')
+    },
+    {
+      path: '/course',
+      name: 'course',
+      component: () => import('@/pages/CourseView/index.vue')
     },
     {
       path: '/components',

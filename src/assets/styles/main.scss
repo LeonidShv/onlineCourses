@@ -37,3 +37,15 @@ body {
 .input {
   width: 200px;
 }
+
+// TODO: chat, name of message
+.q-message-name.q-message-name--sent,
+.q-message-name.q-message-name--received {
+  color: var(--grey);
+}
+
+:root {
+  --header-height: 60px;
+  --footer-height: 60px;
+  --section-padding-block: 48px;
+}
