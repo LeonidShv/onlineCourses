@@ -18,6 +18,7 @@
           <div class="course-messages">
             <q-chat-message
               v-for="({ name, avatar, text, sent }, i) in messages"
+              :key="i"
               :name="name"
               :avatar="avatar"
               :text="text"
@@ -49,12 +50,9 @@
         <div
           v-for="{
             duration,
-            link,
             order,
-            previewImageLink,
             status,
             title,
-            type,
             id,
             completed
           } in courseResponsed?.lessons?.sort(compare)"
@@ -72,7 +70,12 @@
             color="orange"
           />
           <div>
-            <p class="course-lessonTitle">{{ order }}.{{ title }}</p>
+            <p
+              class="course-lessonTitle"
+              :class="{ 'course-lessonTitle--active': choosenLessson.id === id }"
+            >
+              {{ order }}.{{ title }}
+            </p>
             <p class="course-lessonTime">
               <IconTime />{{ Math.round((100 * duration) / 60) / 100 }} min
             </p>
@@ -108,14 +111,11 @@ function compare(a: any, b: any) {
 }
 
 onMounted(async () => {
-  // TODO:
   const id: any = idCourse.value
 
   if (id in localStorage) {
     const courseWithProgress = JSON.parse(localStorage.getItem(id) || 'null')
-    courseResponsed.value = courseWithProgress
-    choosenLessson.value = courseWithProgress?.lessons[0]
-    pageTitle.value = courseWithProgress.title
+    updateData(courseWithProgress)
   } else {
     const course = await getCourse(id)
 
@@ -128,11 +128,15 @@ onMounted(async () => {
 
     localStorage.setItem(id, JSON.stringify(courseWithProgress))
 
-    courseResponsed.value = courseWithProgress
-    choosenLessson.value = courseWithProgress?.lessons[0]
-    pageTitle.value = courseWithProgress.title
+    updateData(courseWithProgress)
   }
 })
+
+function updateData(courseWithProgress: any) {
+  courseResponsed.value = courseWithProgress
+  choosenLessson.value = courseWithProgress?.lessons[0]
+  pageTitle.value = courseWithProgress.title
+}
 
 function chooseLesson(id: string) {
   choosenLessson.value = courseResponsed.value?.lessons.find((lesson: any) => lesson.id === id)
@@ -146,7 +150,7 @@ function checkPause(progress: number) {
     choosenLessson.value.completed = true
   }
 
-  var foundedIndex = courseResponsed.value?.lessons.findIndex(
+  const foundedIndex = courseResponsed.value?.lessons.findIndex(
     (lesson: any) => lesson.id == choosenLessson.value.id
   )
   courseResponsed.value.lessons[foundedIndex] = choosenLessson.value
@@ -155,7 +159,6 @@ function checkPause(progress: number) {
   localStorage.setItem(id, JSON.stringify(courseResponsed.value))
 }
 
-const isCheckbox = ref(false)
 const message = ref('')
 const messages = ref([
   {
@@ -235,8 +238,7 @@ function sendMessage() {
   &-lesson {
     display: flex;
     align-items: center;
-    // TODO: shadow
-    box-shadow: 0px 0.5px 0px 0px rgba(255, 255, 255, 0.4);
+    box-shadow: var(--shadow);
 
     &:not(:first-child) {
       padding: 8px 0;
@@ -266,6 +268,10 @@ function sendMessage() {
 
   &-lessonTitle {
     margin-left: 8px;
+
+    &--active {
+      color: var(--orange);
+    }
   }
 
   &-lessonTime {

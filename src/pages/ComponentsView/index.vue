@@ -98,7 +98,6 @@
 </template>
 
 <script setup lang="ts">
-// import {requestSubscriptions, requestPreviewCourses} from '@/api';
 import { ref } from 'vue'
 
 // import { useQuasar } from 'quasar'

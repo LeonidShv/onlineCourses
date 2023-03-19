@@ -4,11 +4,13 @@
     @[mouseleaveName]="tyrnOff"
     @pause="pause"
     @ended="pause"
+    @keyup="changeSpeed"
     ref="video"
     id="video"
     :poster="previewImageLink"
     :controls="!isPreview"
     :[muted]="isPreview"
+    title="Buttons W and S can change speed of your player"
   >
     <source
       :src="link + '#t=50'"
@@ -83,6 +85,14 @@ function tyrnOff(e: any) {
 function pause() {
   if (!props.isPreview && video.value.currentTime) {
     emit('pause', video.value.currentTime)
+  }
+}
+
+function changeSpeed(e: any) {
+  if (e.key === 'w') {
+    video.value.playbackRate = video.value.playbackRate + 0.25;
+  } else if (e.key === 's') {
+    video.value.playbackRate = video.value.playbackRate - 0.25;
   }
 }
 </script>

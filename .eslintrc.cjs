@@ -24,7 +24,7 @@ module.exports = {
   },
   rules: {
     'vue/multi-word-component-names': 'off',
-    'declaration-block-trailing-semicolon': null,
-      'no-descending-specificity': null,
+    'declaration-block-trailing-semicolon': 'off',
+    'no-descending-specificity': 'off',
   },
 }
