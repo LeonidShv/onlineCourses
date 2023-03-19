@@ -1,7 +1,88 @@
 <template>
   <video
-    src="https://archive.org/download/WebmVp8Vorbis/webmvp8_512kb.mp4"
-    controls
-    poster="https://archive.org/download/WebmVp8Vorbis/webmvp8.gif"
-  />
+    @[mouseoverName]="turnOn"
+    @[mouseleaveName]="tyrnOff"
+    @pause="pause"
+    @ended="pause"
+    ref="video"
+    id="video"
+    :poster="previewImageLink"
+    :controls="!isPreview"
+    :[muted]="isPreview"
+  >
+    <source
+      :src="link + '#t=50'"
+      type="application/x-mpegURL"
+    />
+  </video>
 </template>
+
+<script setup lang="ts">
+import { defineProps, onMounted, onUpdated, ref, computed } from 'vue'
+import Hls from 'hls.js'
+
+export interface Props {
+  previewImageLink?: string
+  link?: string
+  isPreview?: boolean
+  progress?: number
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  previewImageLink: '',
+  link: '',
+  isPreview: false,
+  progress: 0
+})
+
+const emit = defineEmits(['pause'])
+
+const video = ref()
+
+onMounted(() => {
+  prepareVideoPlayer()
+})
+
+onUpdated(() => {
+  prepareVideoPlayer()
+})
+
+function prepareVideoPlayer() {
+  let hls = new Hls()
+  let stream = props.link
+  hls.loadSource(stream)
+  hls.attachMedia(video.value)
+
+  if (props.isPreview) {
+    video.value.muted = true
+  }
+
+  video.value.currentTime = props.progress
+}
+
+const mouseoverName = computed((): string => {
+  return props.isPreview ? 'mouseover' : ''
+})
+
+const mouseleaveName = computed((): string => {
+  return props.isPreview ? 'mouseleave' : ''
+})
+
+const muted = computed((): string => {
+  return props.isPreview ? 'muted' : ''
+})
+
+function turnOn(e: any) {
+  e.target.play()
+}
+
+function tyrnOff(e: any) {
+  e.target.pause()
+}
+
+function pause() {
+  if (!props.isPreview && video.value.currentTime) {
+    emit('pause', video.value.currentTime)
+  }
+}
+</script>

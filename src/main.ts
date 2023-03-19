@@ -5,7 +5,6 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/styles/main.scss'
-
 import { Quasar, Notify } from 'quasar'
 
 const app = createApp(App).use(Quasar, {

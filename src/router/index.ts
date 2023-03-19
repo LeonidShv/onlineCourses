@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('@/pages/CoursesListView/index.vue')
     },
     {
-      path: '/course',
+      path: '/course/:id',
       name: 'course',
       component: () => import('@/pages/CourseView/index.vue')
     },

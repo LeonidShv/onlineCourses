@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h2>Courses</h2>
     <div class="home-header">
+      <h2>Courses</h2>
+
       <q-select
         class="input"
         v-model="sortingOption"
@@ -9,29 +10,46 @@
         :options="sortingOptions"
         label="Sort by"
       />
-      <p>123 courses</p>
     </div>
 
     <div class="home-coursesList">
+      <q-inner-loading
+        :showing="!useGlobalStore().coursesLists.length"
+        dark
+        label="Please wait..."
+        label-class="text-teal"
+        label-style="font-size: 1.1em"
+      />
       <Course
-        v-for="i in 10"
-        :key="i"
-        :title="'JavaScript'"
-        :rating="4.5"
-        :lessonsCount="12"
-        :duration="333"
-        :skills="['js', 'html']"
-        :description="'Reignite your inner drive by managing factors that dampen your motivation.'"
+        v-for="{
+          id,
+          title,
+          rating,
+          lessonsCount,
+          meta,
+          description,
+          previewImageLink
+        } in useGlobalStore().paginatedCoursesLists"
+        :key="id"
+        :title="title"
+        :rating="rating"
+        :lessonsCount="lessonsCount"
+        :skills="meta['skills']"
+        :description="description"
+        :previewImageLink="previewImageLink"
+        :courseVideoPreview="meta['courseVideoPreview']"
+        :id="id"
         class="home-course"
       />
     </div>
 
     <q-pagination
       v-model="pagination"
+      @update:model-value="onPagination"
       color="yellow"
       active-text-color="dark"
-      :max="10"
-      :max-pages="6"
+      :max="maxPages"
+      :max-pages="maxElementsOnPage"
       boundary-numbers
       direction-links
       class="home-pagination"
@@ -40,56 +58,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useGlobalStore } from '@/stores/global'
+import { ref, onMounted, computed, watch } from 'vue'
 import Course from './Course.vue'
+import { getPreviewCourses } from '@/api'
+import { useGlobalStore } from '@/stores/global'
 
 onMounted(async () => {
-  console.log(useGlobalStore().isDarkTheme)
-  useGlobalStore().toggleDarkTheme()
-  console.log(useGlobalStore().isDarkTheme)
-
-  // const data = await requestSubscriptions();
-  // console.log(data);
-
-  // const data2 = await requestPreviewCourses();
-  // console.log(data2);
-
-  const requestOptions: any = {
-    method: 'GET',
-    redirect: 'follow'
-    // mode: 'no-cors',
-    // Accept: '*/*',
-    // 'Accept-Encoding': 'gzip, deflate, br',
-    // Connection: 'keep-alive'
-  }
-
-  fetch('https://api.wisey.app/api/v1/auth/anonymous?platform=subscriptions', requestOptions)
-    .then((response) => response.body)
-    .then((body) => {
-      const reader = body?.getReader()
-
-      return new ReadableStream({
-        start(controller) {
-          function push() {
-            reader?.read().then(({ done, value }) => {
-              if (done) {
-                controller.close()
-                return
-              }
-              controller.enqueue(value)
-              push()
-            })
-          }
-
-          push()
-        }
-      })
-    })
-    .then((stream) => new Response(stream, { headers: { 'Content-Type': 'text/html' } }).text())
-    .then((result) => {
-      console.log(result)
-    })
+  const coursesLists = await getPreviewCourses()
+  useGlobalStore().setCoursesLists(coursesLists.data.courses)
+  onPagination(1)
 })
 
 const sortingOption = ref('')
@@ -104,7 +81,20 @@ const sortingOptions = [
   }
 ]
 
+const maxElementsOnPage = ref(10)
+const maxPages = computed(() =>
+  Math.ceil(useGlobalStore().coursesLists.length / maxElementsOnPage.value)
+)
+
 const pagination = ref(1)
+
+function onPagination(pageNumber: number) {
+  const firstElement = (pageNumber - 1) * maxElementsOnPage.value
+  const lastElement = pageNumber * maxElementsOnPage.value
+  const paginatedCourses = useGlobalStore().coursesLists.slice(firstElement, lastElement)
+
+  useGlobalStore().setPaginatedCoursesLists(paginatedCourses)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -113,6 +103,12 @@ const pagination = ref(1)
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 24px;
+  }
+
+  &-coursesList {
+    position: relative;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height) - 180px);
   }
 
   &-course:not(:first-child) {
