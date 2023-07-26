@@ -5,6 +5,8 @@
   "scripts": {
     "build": "run-p type-check build-only",
     "test:unit": "vitest",
+    "test:unit:ui": "vitest --ui",
+    "unit:coverage": "vitest run --coverage",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build-only": "vite build",
@@ -15,20 +17,28 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@quasar/extras": "^1.0.0",
+    "@vue/apollo-composable": "^4.0.0-beta.8",
     "axios": "^1.3.4",
-    "hls.js": "^1.3.5-0.canary.8979",
+    "graphql": "^16.7.1",
+    "graphql-tag": "^2.12.6",
+    "msw": "^1.2.1",
     "pinia": "^2.0.32",
     "quasar": "^2.0.0",
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.2.47",
+    "vue-hls-video-player": "^1.0.0",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@pinia/testing": "^0.1.0",
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/jsdom": "^21.1.0",
     "@types/node": "^18.14.2",
     "@vitejs/plugin-vue": "^4.0.0",
+    "@vitest/coverage-istanbul": "^0.29.8",
+    "@vitest/ui": "^0.29.1",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "@vue/test-utils": "^2.3.0",

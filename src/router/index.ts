@@ -17,7 +17,17 @@ const router = createRouter({
       path: '/components',
       name: 'components',
       component: () => import('@/pages/ComponentsView/index.vue')
-    }
+    },
+    {
+      path: '/spacex',
+      name: 'spaceX',
+      component: () => import('@/pages/SpaceX/index.vue'),
+    },
+    {
+      path: '/dragon/:id',
+      name: 'dragon',
+      component: () => import('@/pages/SpaceXDragon/index.vue'),
+    },
   ]
 })
 

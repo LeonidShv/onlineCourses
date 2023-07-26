@@ -1,25 +1,18 @@
 <template>
-  <div>
+  <section>
     <div class="home-header">
       <h2>Courses</h2>
 
-      <q-select
-        class="input"
+      <VSelect
         v-model="sortingOption"
-        dark
-        :options="sortingOptions"
         label="Sort by"
+        :options="sortingOptions"
+        class="input"
       />
     </div>
 
     <div class="home-coursesList">
-      <q-inner-loading
-        :showing="!useGlobalStore().coursesLists.length"
-        dark
-        label="Please wait..."
-        label-class="text-teal"
-        label-style="font-size: 1.1em"
-      />
+      <VLoader :value="!useGlobalStore().coursesLists.length" />
       <Course
         v-for="{
           id,
@@ -40,36 +33,42 @@
         :courseVideoPreview="meta['courseVideoPreview']"
         :id="id"
         class="home-course"
+        data-test="CourseView-Course"
       />
     </div>
 
-    <q-pagination
+    <VPagination
       v-model="pagination"
       @update:model-value="onPagination"
-      color="yellow"
-      active-text-color="dark"
       :max="maxPages"
       :max-pages="maxElementsOnPage"
-      boundary-numbers
-      direction-links
       class="home-pagination"
+      data-test="CoursesListView-pagination"
     />
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+
 import Course from './Course.vue'
-import { getPreviewCourses } from '@/api'
+import VLoader from '@/components/Loader/VLoader.vue'
+import VSelect from '@/components/Select/VSelect.vue'
+import VPagination from '@/components/Pagination/VPagination.vue'
+
+import { getPreviewCourses } from '@/server/api'
 import { useGlobalStore } from '@/stores/global'
 
+import type { CourseFromList } from '@/interfaces'
+
 onMounted(async () => {
-  const coursesLists = await getPreviewCourses()
-  useGlobalStore().setCoursesLists(coursesLists.data.courses)
+  const courses: CourseFromList[] = await getPreviewCourses()
+
+  useGlobalStore().setCoursesLists(courses)
   onPagination(1)
 })
 
-const sortingOption = ref('')
+const sortingOption = ref<string>('')
 const sortingOptions = [
   {
     label: 'Rating',
@@ -81,12 +80,12 @@ const sortingOptions = [
   }
 ]
 
-const maxElementsOnPage = ref(10)
-const maxPages = computed(() =>
+const maxElementsOnPage = ref<number>(10)
+const maxPages = computed<number>(() =>
   Math.ceil(useGlobalStore().coursesLists.length / maxElementsOnPage.value)
 )
 
-const pagination = ref(1)
+const pagination = ref<number>(1)
 
 function onPagination(pageNumber: number) {
   const firstElement = (pageNumber - 1) * maxElementsOnPage.value

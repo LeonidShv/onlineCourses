@@ -5,10 +5,10 @@
       class="course-videoWrapper"
     >
       <VideoPlayer
+        type="preview"
         class="course-video"
-        isPreview
         :previewImageLink="`${previewImageLink}/cover.webp`"
-        :link="courseVideoPreview?.link"
+        link="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
       />
     </router-link>
 
@@ -18,35 +18,32 @@
         class="course-link"
         >{{ title }}</router-link
       >
-      <q-rating
+      <VRating
         class="course-rating"
-        readonly
         :model-value="rating"
-        size="18px"
         :max="5"
-        color="yellow"
-        icon-half="star_half"
       />
       <p class="course-text">{{ description }}</p>
       <p class="course-duration">{{ lessonsCount }} lectures</p>
       <div class="course-badges">
-        <q-badge
-          class="course-badge"
+        <VBadge
           v-for="(skill, i) in skills"
-          color="yellow"
-          text-color="dark"
           :key="i"
+          class="course-badge"
         >
           {{ skill }}
-        </q-badge>
+        </VBadge>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import VideoPlayer from '@/components/VVideoPlayer/index.vue'
-import { defineProps } from 'vue'
+// import { VideoPlayer } from 'vue-components';
+import { VideoPlayer } from 'vue-hls-video-player';
+// import VideoPlayer from '@/components/VideoPlayer2/index.vue'
+import VRating from '@/components/Rating/VRating.vue'
+import VBadge from '@/components/Badge/VBadge.vue'
 
 export interface CourseVideoPreview {
   link?: string
@@ -81,7 +78,7 @@ withDefaults(defineProps<Props>(), {
   display: flex;
   gap: 16px;
   padding-bottom: 24px;
-  box-shadow: 0px 0.5px 0px 0px rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow);
 
   &-videoWrapper {
     width: 25%;
@@ -89,7 +86,7 @@ withDefaults(defineProps<Props>(), {
 
   &-video {
     width: 100%;
-    height: 100%;
+    height: 200px;
   }
 
   &-info {
@@ -101,14 +98,14 @@ withDefaults(defineProps<Props>(), {
   }
 
   &-link {
-    color: var(--light);
+    color: var(--text-color);
     display: block;
     font-size: 18px;
     transition: color 0.3s, background-color 0.3s;
 
     &:hover {
-      background-color: var(--dark);
-      color: var(--yellow);
+      background-color: var(--bg-block);
+      color: var(--brand-highlight);
     }
   }
 

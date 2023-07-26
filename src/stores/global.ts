@@ -1,29 +1,34 @@
 import { defineStore } from 'pinia'
+import type { CourseFromList, CourseById } from '@/interfaces'
+
+interface RootState {
+  isDarkTheme: boolean
+  coursesLists: CourseFromList[]
+  paginatedCoursesLists: CourseFromList[]
+  course: CourseById | {}
+}
 
 export const useGlobalStore = defineStore('global', {
-  state: () => ({
-    isDarkTheme: false,
-    coursesLists: [],
-    paginatedCoursesLists: [],
-    course: {},
-  }),
+  state: () =>
+    ({
+      isDarkTheme: false,
+      coursesLists: [],
+      paginatedCoursesLists: [],
+      course: {}
+    } as RootState),
   getters: {},
   actions: {
     toggleDarkTheme() {
       this.isDarkTheme = !this.isDarkTheme
     },
-    setCoursesLists(coursesLists: any) {
-      this.coursesLists = coursesLists;
-
-      localStorage.setItem("coursesLists", JSON.stringify(coursesLists));
+    setCoursesLists(coursesLists: CourseFromList[]) {
+      this.coursesLists = coursesLists
     },
-    setCourse(course: any) {
-      this.course = course;
-
-      localStorage.setItem(course.id, JSON.stringify(course));
+    setCourse(course: CourseById) {
+      this.course = course
     },
-    setPaginatedCoursesLists(paginatedCoursesLists: any) {
-      this.paginatedCoursesLists = paginatedCoursesLists;
-    },
+    setPaginatedCoursesLists(paginatedCoursesLists: CourseFromList[]) {
+      this.paginatedCoursesLists = paginatedCoursesLists
+    }
   }
 })
